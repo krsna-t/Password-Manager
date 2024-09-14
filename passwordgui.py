@@ -23,7 +23,8 @@ def password_gen():
     password=""
     for char in password_list:
         password+=char
-    # password_entry.    
+    # password_entry.
+    password_entry.delete(0,END)    
     password_entry.insert(0,f"{password}")
     check_password_strength()   
 
@@ -37,7 +38,7 @@ def save():
         is_ok=messagebox.askokcancel(title="website",message=f"This is the website:{website} \n and  password:{password}.\n"
         f"Are you sure about that?")
         if is_ok:
-            with open("/home/krishna/Documents/python/day26-30/day29/data.txt","a") as data_file:
+            with open("data.txt","a") as data_file:
                 data_file.write(f"{website} | {email} | {password}\n")
                 website_entry.delete(0,END)
                 password_entry.delete(0,END)
@@ -59,7 +60,7 @@ window=Tk()
 window.title("Password Manager")
 window.config(padx=50,pady=50)
 canvas=Canvas(height=228,width=228,bg="white")
-logo=PhotoImage(file="/home/krishna/Documents/python/day26-30/day29/images.png")
+logo=PhotoImage(file="images.png")
 canvas.create_image(114,114,image=logo)
 canvas.grid(column=1,row=0,padx=25,pady=25) #this is incude 
 website_label= Label(text='Website:')
