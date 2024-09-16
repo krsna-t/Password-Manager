@@ -47,15 +47,17 @@ def save():
             with open("data.json", "r") as data_file:
                 data = json.load(data_file)
         except FileNotFoundError:
-            data = {}
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
 
-        data.update(new_data)
+        else:
+            data.update(new_data)
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
 
-        with open("data.json", "w") as data_file:
-            json.dump(data, data_file, indent=4)
-
-        website_entry.delete(0, END)
-        password_entry.delete(0, END)
+        finally:
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
 
 def find_password():
     website = website_entry.get()
@@ -66,17 +68,17 @@ def find_password():
     try:
         with open("data.json", "r") as data_file:
             data = json.load(data_file)
-            if website in data:
-                email = data[website]["email"]
-                password = data[website]["password"]
-                messagebox.showinfo(
-                    title="Password Found",
-                    message=f"Website: {website}\nEmail: {email}\nPassword: {password}"
-                )
-            else:
-                messagebox.showinfo(title="Not Found", message=f"No password found for {website}")
     except FileNotFoundError:
         messagebox.showinfo(title="Error", message="No data file found.")
+    
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title="Password Found",message=f"Website: {website}\nEmail: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Not Found", message=f"No password found for {website}")
+    
 
 def check_password_strength(event=None):
     password = password_entry.get()
