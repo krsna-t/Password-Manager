@@ -44,19 +44,15 @@ def save():
         messagebox.showinfo(title="Error", message="Enter valid information")
     else:
         try:
-            # Try to read existing data
             with open("data.json", "r") as data_file:
                 data = json.load(data_file)
         except FileNotFoundError:
-            # If file not found, create a new one with the current entry
             data = new_data
         else:
-            # Update existing data with new entry
             data.update(new_data)
 
-        # Save updated data back to the JSON file
-        with open("data.json", "w") as data_file:
-            json.dump(data, data_file, indent=4)
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
 
         finally:
             website_entry.delete(0, END)
@@ -69,13 +65,11 @@ def find_password():
         return
 
     try:
-        # Try to load existing data from the JSON file
         with open("data.json", "r") as data_file:
             data = json.load(data_file)
     except FileNotFoundError:
         messagebox.showinfo(title="Error", message="No data file found.")
     else:
-        # Check if the website exists in the data
         if website in data:
             email = data[website]["email"]
             password = data[website]["password"]
