@@ -44,19 +44,19 @@ def save():
         messagebox.showinfo(title="Error", message="Enter valid information")
     else:
         try:
-            with open("data.json", "r") as data_file:
+            with open("/home/krishna/Documents/python/day26-30/day29/data.json", "r") as data_file:
                 data = json.load(data_file)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             data = new_data
         else:
             data.update(new_data)
 
-            with open("data.json", "w") as data_file:
-                json.dump(data, data_file, indent=4)
+        with open("/home/krishna/Documents/python/day26-30/day29/data.json", "w") as data_file:
+            json.dump(data, data_file, indent=4)
 
-        finally:
-            website_entry.delete(0, END)
-            password_entry.delete(0, END)
+        website_entry.delete(0, END)
+        password_entry.delete(0, END)
+
 
 def find_password():
     website = website_entry.get()
@@ -65,7 +65,7 @@ def find_password():
         return
 
     try:
-        with open("data.json", "r") as data_file:
+        with open("/home/krishna/Documents/python/day26-30/day29/data.json", "r") as data_file:
             data = json.load(data_file)
     except FileNotFoundError:
         messagebox.showinfo(title="Error", message="No data file found.")
@@ -96,7 +96,7 @@ window.title("Password Manager")
 window.config(padx=50, pady=50)
 
 canvas = Canvas(height=228, width=228, bg="white")
-logo = PhotoImage(file="images.png")
+logo = PhotoImage(file="/home/krishna/Documents/python/day26-30/day29/images.png")
 canvas.create_image(114, 114, image=logo)
 canvas.grid(column=1, row=0, padx=25, pady=25, columnspan=2)
 
